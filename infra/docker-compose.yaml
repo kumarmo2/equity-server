@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:16.4-bookworm
+    environment:
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pg-data:/var/lib/postgresql/data
+
+  envoy:
+    image: envoyproxy/envoy:v1.31-latest
+    ports:
+      - 80:80
+      - 9901:9901
+    volumes:
+      - ./envoy-config.yaml:/etc/envoy/envoy.yaml
+      - ./envoy_logs:/var/log
+    environment:
+      # this is done because there were some permission issues.
+      # learn more here: https://www.envoyproxy.io/docs/envoy/latest/start/docker#start-docker
+      - ENVOY_UID=0
+    network_mode: host
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+
