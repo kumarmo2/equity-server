@@ -9,6 +9,9 @@ create table if not exists exchange.positions
     primary key(id)
 );
 
+create unique index uniq_positions_securitycode on exchange.positions(securitycode);
+
+
 create table if not exists exchange.transactions
 (
     id int primary key generated always as identity,

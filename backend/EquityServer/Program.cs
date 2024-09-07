@@ -1,3 +1,7 @@
+using EquityServer.Business;
+using EquityServer.DataAccess;
+using CommonLibs.Database;
+
 namespace EquityServer;
 
 public class Program
@@ -9,6 +13,11 @@ public class Program
         var config = builder.Configuration;
         services.AddControllers();
         services.AddLogging(options => options.AddJsonConsole());
+        services.AddDatabase(config);
+
+        services.AddSingleton<ITradesLogic, TradesLogic>();
+        services.AddSingleton<ITransactionsDao, TransactionsDao>();
+        services.AddSingleton<IPositionDao, PositionDao>();
 
 
 
