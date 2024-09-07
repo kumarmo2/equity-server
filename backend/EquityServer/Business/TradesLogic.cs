@@ -80,7 +80,7 @@ public class TradesLogic : ITradesLogic
 
             foreach (var updatedTrade in tradeGroup.Where(tr => tr.TradeOperation == TradeOperation.Update))
             {
-                quantity = updatedTrade.TradeType == TradeType.Buy ? updatedTrade.Quantity : updatedTrade.Quantity;
+                quantity = updatedTrade.TradeType == TradeType.Buy ? updatedTrade.Quantity : -updatedTrade.Quantity;
                 Console.WriteLine($"....UPDATED record found, {updatedTrade.Quantity}, new quantity: {quantity}");
             }
             return quantity;
